@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ficha de desempeños · Indaga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700&display=swap">
+<style>
+:root {
+  --bg: #fbfafd; --surface: #fff; --ink: #1d1a24; --muted: #5d566c; --line: #ddd7e7;
+  --accent: #4b2275; --b1: #c8325f; --ok: #2f7d45;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #15131b; --surface: #1f1c27; --ink: #ece8f3; --muted: #a8a0b8; --line: #363044;
+          --accent: #b78be8; --b1: #ea6a90; --ok: #6cc283; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 "Atkinson Hyperlegible", system-ui, sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+a.volver { color: var(--accent); text-decoration: none; font-weight: 700; }
+h1 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 1.7rem; line-height: 1.15; margin: 14px 0 6px; }
+.sub { color: var(--muted); margin: 0 0 8px; }
+.aviso { background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--b1); border-radius: 10px; padding: 10px 14px; margin: 14px 0 6px; }
+nav.grados { position: sticky; top: 0; background: var(--bg); padding: 10px 0; display: flex; gap: 8px; flex-wrap: wrap; z-index: 1; }
+nav.grados a { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none; font-weight: 700; }
+section { margin-top: 26px; scroll-margin-top: 64px; }
+h2 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 1.35rem; margin: 0 0 4px; }
+.intro { color: var(--muted); margin: 0 0 12px; font-size: .95rem; }
+.desempeno { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+.cap { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 6px; }
+.cap span { font-size: .82rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 700; }
+.desempeno p { margin: 0; }
+button.copiar { font: inherit; font-size: .9rem; font-weight: 700; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; flex: none; }
+button.copiar.hecho { border-color: var(--ok); color: var(--ok); }
+footer { margin-top: 32px; color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+  <a class="volver" href="./">← Volver a los enlaces</a>
+  <h1>Ficha de desempeños · Competencia “Indaga mediante métodos científicos para construir sus conocimientos”</h1>
+  <p class="sub">Copiados del Programa curricular de Educación Secundaria (MINEDU).</p>
+  <div class="aviso">Elige tu grado, busca el desempeño que calza con tu tema y presiona <b>Copiar</b>. Pégalo en la caja Desempeño de tu plantilla con <b>Ctrl + Shift + V</b>, sin cambiar nada.</div>
+  <nav class="grados" aria-label="Grados">
+    <a href="#g1">1.°</a><a href="#g2">2.°</a><a href="#g3">3.°</a><a href="#g4">4.°</a><a href="#g5">5.°</a>
+  </nav>
+  <div id="grados"></div>
+  <footer>Fuente: Programa curricular de Educación Secundaria, MINEDU. 1.° y 2.°: ciclo VI. 3.°, 4.° y 5.°: ciclo VII.</footer>
+</main>
+
+<script>
+const CAPACIDADES = [
+  "Problematiza situaciones",
+  "Diseña estrategias para hacer indagación",
+  "Genera y registra datos e información",
+  "Analiza datos e información",
+  "Evalúa y comunica el proceso y resultados de su indagación",
+];
+
+const GRADOS = [
+  { id: "g1", titulo: "1.° grado de secundaria",
+    intro: "Cuando el estudiante indaga mediante métodos científicos para construir conocimientos y se encuentra en proceso hacia el nivel esperado del ciclo VI, realiza desempeños como los siguientes:",
+    desempenos: [
+      "Formula preguntas acerca de las variables que influyen en un hecho, fenómeno u objeto natural o tecnológico, y selecciona aquella que puede ser indagada científicamente. Plantea hipótesis en las que establece relaciones de causalidad entre las variables.",
+      "Propone procedimientos para observar, manipular la variable independiente, medir la variable dependiente y controlar aspectos que modifican la experimentación. Selecciona herramientas, materiales e instrumentos para recoger datos cualitativos/cuantitativos. Prevé el tiempo y las medidas de seguridad personal y del lugar de trabajo.",
+      "Obtiene datos cualitativos/cuantitativos a partir de la manipulación de la variable independiente y mediciones repetidas de la variable dependiente. Controla aspectos que modifican la experimentación. Organiza los datos y hace cálculos de la moda, mediana, proporcionalidad u otros, y los representa en gráficas.",
+      "Compara los datos obtenidos (cualitativos y cuantitativos) para establecer relaciones de causalidad, correspondencia, equivalencia, pertenencia, similitud, diferencia u otros; contrasta los resultados con su hipótesis e información científica para confirmar o refutar su hipótesis, y elabora conclusiones.",
+      "Sustenta si sus conclusiones responden a la pregunta de indagación, y si los procedimientos, mediciones y ajustes realizados contribuyeron a demostrar su hipótesis. Comunica su indagación a través de medios virtuales o presenciales.",
+    ]},
+  { id: "g2", titulo: "2.° grado de secundaria",
+    intro: "Cuando el estudiante indaga mediante métodos científicos para construir conocimientos y logra el nivel esperado del ciclo VI, realiza desempeños como los siguientes:",
+    desempenos: [
+      "Formula preguntas acerca de las variables que influyen en un hecho, fenómeno u objeto natural o tecnológico y selecciona aquella que puede ser indagada científicamente. Plantea hipótesis en las que establece relaciones de causalidad entre las variables. Considera las variables intervinientes en su indagación.",
+      "Propone procedimientos para observar, manipular la variable independiente, medir la variable dependiente y controlar la variable interviniente. Selecciona herramientas, materiales e instrumentos para recoger datos cualitativos/cuantitativos. Prevé el tiempo y las medidas de seguridad personal y del lugar de trabajo.",
+      "Obtiene datos cualitativos/cuantitativos a partir de la manipulación de la variable independiente y mediciones repetidas de la variable dependiente. Realiza los ajustes en sus procedimientos y controla las variables intervinientes. Organiza los datos y hace cálculos de medidas de tendencia central, proporcionalidad u otros, y los representa en gráficas.",
+      "Compara los datos obtenidos (cualitativos y cuantitativos) para establecer relaciones de causalidad, correspondencia, equivalencia, pertenencia, similitud, diferencia u otros; contrasta los resultados con su hipótesis e información científica para confirmar o refutar su hipótesis, y elabora conclusiones.",
+      "Sustenta si sus conclusiones responden a la pregunta de indagación, y si los procedimientos, mediciones, cálculos y ajustes realizados contribuyeron a demostrar su hipótesis. Comunica su indagación a través de medios virtuales o presenciales.",
+    ]},
+  { id: "g3", titulo: "3.° grado de secundaria",
+    intro: "Cuando el estudiante indaga mediante métodos científicos para construir conocimientos y se encuentra en proceso hacia el nivel esperado del ciclo VII, realiza desempeños como los siguientes:",
+    desempenos: [
+      "Formula preguntas sobre el hecho, fenómeno u objeto natural o tecnológico para delimitar el problema por indagar. Determina el comportamiento de las variables, y plantea hipótesis basadas en conocimientos científicos, en las que establece relaciones de causalidad entre las variables que serán investigadas. Considera las variables intervinientes que pueden influir en su indagación y elabora los objetivos.",
+      "Propone y fundamenta, sobre la base de los objetivos de su indagación e información científica, procedimientos que le permitan observar, manipular y medir las variables y el tiempo por emplear, las medidas de seguridad, y las herramientas, materiales e instrumentos de recojo de datos cualitativos/cuantitativos para confirmar o refutar la hipótesis.",
+      "Obtiene datos cualitativos/cuantitativos a partir de la manipulación de la variable independiente y mediciones repetidas de la variable dependiente. Realiza los ajustes en sus procedimientos y controla las variables intervinientes. Organiza los datos y hace cálculos de medidas de tendencia central, proporcionalidad u otros, y los representa en gráficas.",
+      "Compara los datos obtenidos (cualitativos y cuantitativos) para establecer relaciones de causalidad, correspondencia, equivalencia, pertenencia, similitud diferencia u otros. Identifica regularidades o tendencias. Contrasta los resultados con su hipótesis e información científica para confirmar o refutar su hipótesis, y elabora conclusiones.",
+      "Sustenta, sobre la base de conocimientos científicos, sus conclusiones, procedimientos, mediciones, cálculos y ajustes realizados, y si permitieron demostrar su hipótesis y lograr el objetivo. Comunica su indagación a través de medios virtuales o presenciales.",
+    ]},
+  { id: "g4", titulo: "4.° grado de secundaria",
+    intro: "Cuando el estudiante indaga mediante métodos científicos para construir conocimientos y se encuentra en proceso hacia el nivel esperado del ciclo VII, realiza desempeños como los siguientes:",
+    desempenos: [
+      "Formula preguntas sobre el hecho, fenómeno u objeto natural o tecnológico que indaga para delimitar el problema. Determina el comportamiento de las variables, y plantea hipótesis basadas en conocimientos científicos, en las que establece relaciones entre las variables que serán investigadas. Considera las variables intervinientes que pueden influir en su indagación y elabora los objetivos.",
+      "Propone y fundamenta, sobre la base de los objetivos de su indagación e información científica, procedimientos que le permitan observar, manipular y medir las variables; el tiempo por emplear; las medidas de seguridad; las herramientas, materiales e instrumentos de recojo de datos cualitativos/cuantitativos; y el margen de error. Estos procedimientos también le permitirán prever un grupo de control para confirmar o refutar la hipótesis.",
+      "Obtiene y organiza datos cualitativos/cuantitativos a partir de la manipulación de la variable independiente y mediciones repetidas de la variable dependiente. Realiza ajustes en sus procedimientos o instrumentos y controla las variables intervinientes; hace cálculos de medidas de tendencia central, proporcionalidad u otros, obtiene el margen de error, y representa sus resultados en gráficas.",
+      "Compara los datos obtenidos (cualitativos y cuantitativos) para establecer relaciones de causalidad, correspondencia, equivalencia, pertenencia, similitud, diferencia u otros. Identifica regularidades o tendencias. Contrasta los resultados con su hipótesis e información científica para confirmar o refutar su hipótesis, y elabora conclusiones.",
+      "Sustenta, sobre la base de conocimientos científicos, sus conclusiones, procedimientos y la reducción del error a través del uso del grupo de control, repetición de mediciones, cálculos y ajustes realizados en la obtención de resultados válidos y fiables para demostrar la hipótesis y lograr el objetivo. Comunica su indagación a través de medios virtuales o presenciales.",
+    ]},
+  { id: "g5", titulo: "5.° grado de secundaria",
+    intro: "Cuando el estudiante indaga mediante métodos científicos para construir conocimientos y logra el nivel esperado del ciclo VII, realiza desempeños como los siguientes:",
+    desempenos: [
+      "Formula preguntas sobre el hecho, fenómeno u objeto natural o tecnológico para delimitar el problema por indagar. Observa el comportamiento de las variables. Plantea hipótesis basadas en conocimientos científicos en las que establece relaciones entre las variables que serán investigadas. Considera las variables intervinientes que pueden influir en su indagación y elabora los objetivos.",
+      "Propone y fundamenta, sobre la base de los objetivos de su indagación e información científica, procedimientos que le permitan observar, manipular y medir las variables; el tiempo por emplear; las medidas de seguridad, herramientas, materiales e instrumentos de recojo de datos cualitativos/cuantitativos; y el margen de error. Estos procedimientos también le permitirán prever un grupo de control para confirmar o refutar la hipótesis.",
+      "Obtiene y organiza datos cualitativos/cuantitativos a partir de la manipulación de la variable independiente y de mediciones repetidas de la variable dependiente. Realiza los ajustes en sus procedimientos o instrumentos. Controla las variables intervinientes. Realiza cálculos de medidas de tendencia central, proporcionalidad u otros. Obtiene el margen de error y representa sus resultados en gráficas.",
+      "Compara los datos obtenidos (cualitativos y cuantitativos) para establecer relaciones de causalidad, correspondencia, equivalencia, pertenencia, similitud, diferencia u otros. Identifica regularidades o tendencias. Predice el comportamiento de las variables y contrasta los resultados con su hipótesis e información científica, para confirmar o refutar su hipótesis. Elabora conclusiones.",
+      "Sustenta, sobre la base de conocimientos científicos, sus conclusiones, los procedimientos y la reducción del error a través del uso del grupo de control, la repetición de mediciones, los cálculos y los ajustes realizados en la obtención de resultados válidos y fiables para demostrar la hipótesis y lograr el objetivo. Su indagación puede ser reproducida o genera nuevas preguntas que den lugar a otras indagaciones. Comunica su indagación con un informe escrito o a través de otros medios.",
+    ]},
+];
+
+function copiar(texto, boton) {
+  const listo = () => { boton.textContent = "Copiado"; boton.classList.add("hecho");
+    setTimeout(() => { boton.textContent = "Copiar"; boton.classList.remove("hecho"); }, 2000); };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(texto).then(listo, () => seleccionar(boton));
+  } else { seleccionar(boton); }
+}
+function seleccionar(boton) {
+  const p = boton.closest(".desempeno").querySelector("p");
+  const r = document.createRange(); r.selectNodeContents(p);
+  const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  boton.textContent = "Seleccionado: Ctrl + C";
+}
+
+const cont = document.getElementById("grados");
+for (const g of GRADOS) {
+  const sec = document.createElement("section");
+  sec.id = g.id;
+  const h = document.createElement("h2"); h.textContent = g.titulo;
+  const intro = document.createElement("p"); intro.className = "intro"; intro.textContent = g.intro;
+  sec.append(h, intro);
+  g.desempenos.forEach((texto, i) => {
+    const d = document.createElement("div"); d.className = "desempeno";
+    const cap = document.createElement("div"); cap.className = "cap";
+    const etiqueta = document.createElement("span"); etiqueta.textContent = CAPACIDADES[i];
+    const b = document.createElement("button"); b.className = "copiar"; b.type = "button"; b.textContent = "Copiar";
+    b.addEventListener("click", () => copiar(texto, b));
+    cap.append(etiqueta, b);
+    const p = document.createElement("p"); p.textContent = texto;
+    d.append(cap, p);
+    sec.append(d);
+  });
+  cont.append(sec);
+}
+</script>
+</body>
+</html>

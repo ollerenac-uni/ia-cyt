@@ -58,7 +58,7 @@ const SECCIONES = [
     { texto: "Guía del participante", nota: "Paso a paso de todo el día", url: null },
   ]},
   { titulo: "Bloque 1 · Prompts", color: "--b1", links: [
-    { texto: "Ficha de desempeños", nota: "Copia de aquí tu desempeño, tal cual", url: null },
+    { texto: "Ficha de desempeños", nota: "Copia de aquí tu desempeño, tal cual", url: "ficha.html" },
   ]},
   { titulo: "Bloque 2 · NotebookLM", color: "--b2", links: [
     { texto: "Check-in 2", url: null },
@@ -91,7 +91,7 @@ for (const s of SECCIONES) {
   for (const l of s.links) {
     const el = document.createElement(l.url ? "a" : "span");
     el.className = "btn";
-    if (l.url) { el.href = l.url; el.target = "_blank"; el.rel = "noopener"; }
+    if (l.url) { el.href = l.url; if (/^https?:/.test(l.url)) { el.target = "_blank"; el.rel = "noopener"; } }
     const t = document.createElement("span");
     t.textContent = l.texto;
     if (l.nota) { const n = document.createElement("small"); n.textContent = l.nota; t.append(n); }
