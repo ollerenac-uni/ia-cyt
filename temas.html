@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Temas por grado · Indaga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700&display=swap">
+<style>
+:root {
+  --bg: #fbfafd; --surface: #fff; --ink: #1d1a24; --muted: #5d566c; --line: #ddd7e7;
+  --accent: #4b2275; --b1: #c8325f; --ok: #2f7d45; --warn: #a3451a; --soft: #f3effa;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #15131b; --surface: #1f1c27; --ink: #ece8f3; --muted: #a8a0b8; --line: #363044;
+          --accent: #b78be8; --b1: #ea6a90; --ok: #6cc283; --warn: #f0a070; --soft: #2a2535; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 "Atkinson Hyperlegible", system-ui, sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+a.volver { color: var(--accent); text-decoration: none; font-weight: 700; }
+h1 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 1.7rem; line-height: 1.15; margin: 14px 0 6px; }
+.aviso { background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--b1); border-radius: 10px; padding: 10px 14px; margin: 14px 0 6px; }
+.aviso ol { margin: 6px 0 0; padding-left: 22px; }
+nav.grados { position: sticky; top: 0; background: var(--bg); padding: 10px 0; display: flex; gap: 8px; flex-wrap: wrap; z-index: 1; }
+nav.grados a { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none; font-weight: 700; }
+section { margin-top: 26px; scroll-margin-top: 64px; }
+h2 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 1.35rem; margin: 0 0 10px; }
+.tarjeta { background: var(--surface); border: 1px solid var(--line); border-top: 6px solid var(--accent); border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; }
+.tarjeta h3 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 1.2rem; line-height: 1.25; margin: 0 0 4px; }
+.peru { color: var(--muted); margin: 0 0 10px; font-size: .95rem; }
+.rotulo { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 700; margin: 14px 0 6px; }
+.desempeno { background: var(--soft); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+.cap { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 4px; font-weight: 700; font-size: .9rem; }
+.desempeno p, .tarjeta dd { margin: 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; margin: 0; }
+dt { font-weight: 700; }
+dd.riesgo { color: var(--warn); }
+@media (max-width: 520px) { dl { grid-template-columns: 1fr; } dt { margin-top: 6px; } }
+.porque { font-size: .9rem; color: var(--muted); margin: 12px 0 0; }
+details { margin-top: 12px; border: 1px dashed var(--line); border-radius: 10px; padding: 8px 12px; }
+summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+pre { white-space: pre-wrap; font: 15px/1.5 ui-monospace, Consolas, monospace; background: var(--soft); border-radius: 8px; padding: 10px; margin: 10px 0 8px; }
+button.copiar { font: inherit; font-size: .9rem; font-weight: 700; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; flex: none; }
+button.copiar.hecho { border-color: var(--ok); color: var(--ok); }
+.fuentes a { color: var(--accent); font-weight: 700; }
+footer { margin-top: 32px; color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+  <a class="volver" href="./">← Volver a los enlaces</a>
+  <h1>Temas por grado</h1>
+  <div class="aviso"><b>Qué haces aquí:</b>
+    <ol>
+      <li>Busca tu grado y elige <b>uno</b> de sus dos temas.</li>
+      <li>Copia los 2 desempeños con <b>Copiar</b> y pégalos en la diapositiva 1 de tu plantilla con <b>Ctrl + Shift + V</b>, sin cambiar nada.</li>
+      <li>Usa la pregunta, las variables, los materiales y el riesgo para escribir tu prompt.</li>
+    </ol>
+  </div>
+  <nav class="grados" aria-label="Grados">
+    <a href="#g1">1.°</a><a href="#g2">2.°</a><a href="#g3">3.°</a><a href="#g4">4.°</a><a href="#g5">5.°</a>
+  </nav>
+  <div id="temas"></div>
+  <footer>Desempeños y "por qué es de tu grado": Programa curricular de Educación Secundaria, MINEDU (págs. 181–189).</footer>
+</main>
+
+<script src="desempenos.js"></script>
+<script>
+// Cada tema usa los desempeños de Problematiza (0) y Genera y registra (2) de su grado.
+// fuentes: URL de la subcarpeta del banco de fuentes; null = "Próximamente".
+const TEMAS = [
+  { grado: 1, pregunta: "¿Qué material filtra mejor el agua turbia de una acequia?",
+    peru: "En muchas zonas el agua no llega potable a casa.",
+    cambian: "el material del filtro (arena, grava, carbón vegetal, tela)", miden: "qué tan clara sale el agua (escala de 1 a 5 contra una hoja con letras)",
+    materiales: "botellas plásticas cortadas, arena, grava, carbón vegetal, tela de algodón, agua con tierra, vasos transparentes",
+    riesgo: "Creer que el agua filtrada se puede tomar. Medida: el agua filtrada no se toma; un filtro casero no la potabiliza.",
+    explica: "Describe las propiedades de la materia, y explica los cambios físicos y químicos a partir de sus interacciones con transferencia de energía.", pag: 186, fuentes: null },
+  { grado: 1, pregunta: "¿Cómo se comporta el aceite de cocina usado en el agua de un río?",
+    peru: "El aceite usado que va al desagüe termina en ríos y en el mar.",
+    cambian: "la cantidad de aceite (5, 10, 20 gotas)", miden: "el área de agua que cubre la capa de aceite (cm², sobre papel cuadriculado)",
+    materiales: "aceite de cocina usado, agua, fuente transparente, gotero, papel cuadriculado, regla",
+    riesgo: "Derrames que resbalan y botar el aceite al lavadero. Medida: limpiar al momento y juntar el aceite en una botella para reciclaje.",
+    explica: "Describe las propiedades de la materia, y explica los cambios físicos y químicos a partir de sus interacciones con transferencia de energía.", pag: 186, fuentes: null },
+  { grado: 2, pregunta: "¿Qué techo se calienta más con el sol: calamina, estera o adobe?",
+    peru: "Muchas viviendas tienen techo de calamina.",
+    cambian: "el material del techo (calamina, estera, adobe)", miden: "la temperatura debajo de cada muestra cada 5 minutos (°C)",
+    materiales: "trozos de calamina, estera y adobe del mismo tamaño, termómetro de cocina, reloj, cartulina",
+    riesgo: "La calamina al sol quema y sus bordes cortan. Medida: tomarla con trapo o guantes y limar o encintar los bordes.",
+    explica: "Explica que el calor se puede cuantificar y transferir de un cuerpo con mayor temperatura a otro de menor temperatura.", pag: 186, fuentes: null },
+  { grado: 2, pregunta: "¿Cómo influye la luz en el crecimiento de plantitas de maíz o quinua?",
+    peru: "Maíz y quinua: cultivos andinos de la canasta familiar.",
+    cambian: "las horas de luz (sol, sombra, caja cerrada)", miden: "la altura de la plantita cada día (mm) y su color",
+    materiales: "semillas de maíz o quinua para consumo, vasos, algodón o tierra, caja de cartón, regla",
+    riesgo: "Semillas compradas para sembrar pueden venir con fungicida. Medida: usar semillas para consumo y lavarse las manos.",
+    explica: "Describe cómo a través de los procesos de fotosíntesis y respiración se produce la energía que la célula utiliza para producir sustancias orgánicas.", pag: 186, fuentes: null },
+  { grado: 3, pregunta: "¿Qué hace que una palta cortada se oscurezca más rápido?",
+    peru: "La palta peruana se exporta a todo el mundo.",
+    cambian: "lo que se pone sobre la palta (limón, sal, agua o nada)", miden: "el color cada 10 minutos (escala de 1 a 5)",
+    materiales: "palta, limón, sal, agua, platos, reloj, escala de color dibujada",
+    riesgo: "Cortes con cuchillo. Medida: el docente corta la palta; los estudiantes no usan cuchillo.",
+    explica: "Explica cualitativa y cuantitativamente que la degradación de los materiales depende de su composición química y de las condiciones ambientales.", pag: 188, fuentes: null },
+  { grado: 3, pregunta: "¿Se oxida más rápido un clavo en agua de mar o en agua dulce?",
+    peru: "En la costa el salitre oxida rejas, techos y autos.",
+    cambian: "el tipo de agua (de caño, con sal como agua de mar, sin agua)", miden: "el óxido en el clavo cada día durante 5 días (escala de 1 a 5)",
+    materiales: "clavos de hierro sin galvanizar, agua de caño, sal, vasos, lupa",
+    riesgo: "Pinchazos con clavos oxidados. Medida: tomarlos con pinza y lavarse las manos al terminar.",
+    explica: "Explica cualitativa y cuantitativamente que la degradación de los materiales depende de su composición química y de las condiciones ambientales.", pag: 188, fuentes: null },
+  { grado: 4, pregunta: "¿Cómo cambia la acidez del agua de un río cuando recibe drenaje ácido de mina?",
+    peru: "Minería y ríos: un tema que viven muchas regiones.",
+    cambian: "las gotas de \"drenaje\" simulado con vinagre (0, 5, 10, 20)", miden: "el pH del agua con tiras de pH",
+    materiales: "agua de caño, vinagre blanco (simula el drenaje ácido), gotero, vasos, tiras de pH",
+    riesgo: "Contacto con metales pesados. Medida: nunca traer agua ni tierra real de relaves o de ríos contaminados (pueden tener plomo, arsénico o mercurio); solo la simulación con vinagre.",
+    explica: "Fundamenta su posición ética, empleando evidencia científica, frente a eventos paradigmáticos y situaciones donde la ciencia y la tecnología son cuestionadas por su impacto en la sociedad y el ambiente.", pag: 188, fuentes: null },
+  { grado: 4, pregunta: "¿Cuánto tarda el pulso en volver a la normalidad después de hacer ejercicio?",
+    peru: "Salud y actividad física de los propios estudiantes.",
+    cambian: "los minutos de ejercicio (saltos: 0, 1 y 2 minutos)", miden: "el pulso cada minuto hasta que vuelve al de reposo (latidos por minuto)",
+    materiales: "reloj o cronómetro del celular, espacio despejado",
+    riesgo: "Malestar en estudiantes con problemas cardíacos o asma. Medida: ellos solo miden, no hacen ejercicio; el ejercicio es moderado.",
+    explica: "Justifica los mecanismos de regulación en los sistemas (regulación de temperatura, glucosa, hormonas, líquidos y sales) para conservar la homeostasis del organismo humano.", pag: 188, fuentes: null },
+  { grado: 5, pregunta: "¿De qué depende el periodo de un péndulo?",
+    peru: "Un experimento clásico, con materiales de ferretería.",
+    cambian: "el largo del hilo (20, 40, 60 cm) y la masa (1, 2, 3 tuercas)", miden: "el tiempo de 10 oscilaciones (s)",
+    materiales: "hilo, tuercas, cinta adhesiva, regla o wincha, cronómetro del celular",
+    riesgo: "La masa se suelta y golpea. Medida: atarla bien y no balancear hacia las personas.",
+    explica: "Explica cualitativa y cuantitativamente el comportamiento de las ondas mecánicas y electromagnéticas a partir del movimiento vibratorio armónico simple.", pag: 189, fuentes: null },
+  { grado: 5, pregunta: "¿Se derrite más rápido el hielo cubierto de polvo oscuro?",
+    peru: "Los glaciares andinos retroceden; el hollín y el polvo los oscurecen.",
+    cambian: "la cubierta del hielo (nada, tierra clara, carbón molido)", miden: "el tiempo hasta que se derrite (min)",
+    materiales: "cubitos de hielo del mismo tamaño, tierra clara, carbón molido, platos, cronómetro, sol o lámpara",
+    riesgo: "Polvo de carbón en los ojos y lámpara caliente. Medida: usar poco carbón, sin soplar, y no tocar la lámpara encendida.",
+    explica: "Fundamenta las relaciones entre los factores físicos y químicos que intervienen en los fenómenos y situaciones que amenazan la sostenibilidad de la biósfera, y evalúa la pertinencia científica de los acuerdos y mecanismos de conservación y lucha contra el cambio climático para el desarrollo sostenible.", pag: 189, fuentes: null },
+];
+
+const ELEGIDOS = [0, 2]; // índices en CAPACIDADES
+
+function promptModelo(t, g) {
+  const des = ELEGIDOS.map(i => `${CAPACIDADES[i]}: "${g.desempenos[i]}"`).join("\n");
+  return `Eres docente de Ciencia y Tecnología de ${t.grado}.° de secundaria en Perú.
+Contexto: competencia "Indaga mediante métodos científicos para construir sus conocimientos". Desempeños:
+${des}
+Tengo 30 estudiantes y un aula sin laboratorio.
+Tarea: diseña una sesión de 90 minutos con la pregunta de indagación "${t.pregunta}". Los estudiantes cambian ${t.cambian} y miden ${t.miden}.
+Formato: estructura MINEDU con propósito, evidencia, criterios de evaluación e inicio-desarrollo-cierre con minutos.
+Restricciones: usa los desempeños tal como están escritos, sin reformularlos, y solo sus capacidades. Solo estos materiales: ${t.materiales}. Incluye este riesgo y su medida: ${t.riesgo} No inventes datos ni referencias; marca con [VERIFICAR] toda cifra que deba comprobarse.`;
+}
+
+function el(tag, clase, texto) {
+  const e = document.createElement(tag);
+  if (clase) e.className = clase;
+  if (texto) e.textContent = texto;
+  return e;
+}
+function botonCopiar(texto, nodo) {
+  const b = el("button", "copiar", "Copiar"); b.type = "button";
+  b.addEventListener("click", () => copiar(texto, b, nodo));
+  return b;
+}
+
+const cont = document.getElementById("temas");
+GRADOS.forEach((g, gi) => {
+  const sec = el("section"); sec.id = g.id;
+  sec.append(el("h2", "", g.titulo));
+  TEMAS.filter(t => t.grado === gi + 1).forEach((t, ti) => {
+    const c = el("article", "tarjeta");
+    c.append(el("h3", "", `Tema ${ti + 1} · ${t.pregunta}`), el("p", "peru", t.peru));
+
+    c.append(el("p", "rotulo", "Desempeños · cópialos a la diapositiva 1"));
+    for (const i of ELEGIDOS) {
+      const d = el("div", "desempeno"), cap = el("div", "cap"), p = el("p", "", g.desempenos[i]);
+      cap.append(el("span", "", CAPACIDADES[i]), botonCopiar(g.desempenos[i], p));
+      d.append(cap, p); c.append(d);
+    }
+
+    c.append(el("p", "rotulo", "Para tu prompt"));
+    const dl = el("dl");
+    const fila = (k, v, clase) => dl.append(el("dt", "", k), el("dd", clase || "", v));
+    fila("Cambian", t.cambian);
+    fila("Miden", t.miden);
+    fila("Materiales", t.materiales);
+    fila("Riesgo y medida", t.riesgo, "riesgo");
+    const dt = el("dt", "", "Fuentes"), dd = el("dd", "fuentes");
+    if (t.fuentes) { const a = el("a", "", "Abrir carpeta del banco"); a.href = t.fuentes; a.target = "_blank"; a.rel = "noopener"; dd.append(a); }
+    else dd.textContent = "Próximamente";
+    dl.append(dt, dd);
+    c.append(dl);
+
+    c.append(el("p", "porque", `Por qué es de tu grado (pág. ${t.pag}): "${t.explica}"`));
+
+    const det = el("details"), texto = promptModelo(t, g), pre = el("pre", "", texto);
+    det.append(el("summary", "", "Ver prompt modelo (úsalo solo si te atrasaste)"), pre, botonCopiar(texto, pre));
+    c.append(det);
+    sec.append(c);
+  });
+  cont.append(sec);
+});
+</script>
+</body>
+</html>
