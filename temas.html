@@ -69,6 +69,7 @@ footer { margin-top: 32px; color: var(--muted); font-size: .9rem; }
 <script src="desempenos.js"></script>
 <script>
 // Cada tema usa los desempeños de Problematiza (0) y Genera y registra (2) de su grado.
+const PROGRAMA = { texto: "Programa curricular de Educación Secundaria (MINEDU), págs. 177–194", url: "https://www.minedu.gob.pe/curriculo/pdf/programa-curricular-educacion-secundaria.pdf" };
 // ficha: fuente oficial que respalda el tema (ficha MINEDU o norma). fuentes: URL de la subcarpeta del banco; null = "Próximamente".
 const TEMAS = [
   { grado: 1, pregunta: "¿Cómo cambia el tiempo que tarda en derretirse un cubito de hielo según su distancia a una vela?",
@@ -194,11 +195,13 @@ GRADOS.forEach((g, gi) => {
     if (t.fuentes) { const a = el("a", "", "Abrir carpeta del banco"); a.href = t.fuentes; a.target = "_blank"; a.rel = "noopener"; dd.append(a); }
     else dd.textContent = "Próximamente";
     dl.append(dt, dd);
-    if (t.ficha) {
-      const fa = el("a", "", t.ficha.texto); fa.href = t.ficha.url; fa.target = "_blank"; fa.rel = "noopener";
-      const fd = el("dd", "fuentes"); fd.append(fa);
-      dl.append(el("dt", "", "Fuente oficial"), fd);
+    const fd = el("dd", "fuentes");
+    for (const f of [t.ficha, PROGRAMA].filter(Boolean)) {
+      const fa = el("a", "", f.texto); fa.href = f.url; fa.target = "_blank"; fa.rel = "noopener";
+      if (fd.childNodes.length) fd.append(el("br"));
+      fd.append(fa);
     }
+    dl.append(el("dt", "", "Fuentes oficiales"), fd);
     c.append(dl);
 
     c.append(el("p", "porque", `Por qué es de tu grado (pág. ${t.pag}): "${t.explica}"`));
